@@ -18,7 +18,7 @@ function Footer() {
       left="0"
     >
       <HStack spacing="12px" justify="center">
-        <Button as="a" href="https://github.com/J1Mtonic/VAIPSM" target="_blank" variant="icon">
+        <Button as="a" href="https://github.com/J1Mtonic/VenusRevoke" target="_blank" variant="icon">
           <Icon as={FaGithub} className="white" />
         </Button>
         <Button as="a" href="https://twitter.com/Venus_Community" target="_blank" variant="icon">
