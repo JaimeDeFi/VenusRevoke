@@ -1,15 +1,15 @@
 import React from 'react';
-import { useColorModeValue, useTheme } from '@chakra-ui/react';
+import { useColorModeValue, useTheme, Box } from '@chakra-ui/react';
 
-function LogoVenus() {
+function LogoVenus({ size }) {
   const theme = useTheme();
   const fillColor = useColorModeValue(theme.colors.customGray[400], 'white');
 
+  const logoSize = size || 'clamp(46.5px, 8vw, 58.2px)';
+
   return (
-    <div style={{
-      width: 'clamp(46.5px, 8vw, 58.2px)'
-    }}>
-      <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 174.6 154.6" preserveAspectRatio="xMidYMid meet">
+    <Box width={logoSize}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 174.6 154.6" preserveAspectRatio="xMidYMid meet">
         <defs>
           <clipPath id="a">
             <path d="M.2 15.9H175v155H.2Zm0 0" />
@@ -24,7 +24,7 @@ function LogoVenus() {
           </g>
         </g>
       </svg>
-    </div>
+    </Box>
   );
 }
 

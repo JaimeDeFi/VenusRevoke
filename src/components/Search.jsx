@@ -4,23 +4,27 @@ import { SearchIcon, CloseIcon } from '@chakra-ui/icons';
 import { scanAddress, transformDataForCard } from './searchHelpers';
 import LogoVenus from './LogoVenus.jsx';
 
-const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition, onResults, onLoading, clearAll, setSearchBarText, SearchBarText }, ref) => {
+const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition, onResults, onLoading, clearAll, setSearchBarText, SearchBarText, selectedChainId }, ref) => {
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const theme = useTheme();
   const textColor = useColorModeValue(theme.colors.customGray[400], 'white');
 
   const handleSearch = async () => {
-    if (SearchBarText && !SearchBarText.startsWith("0x") || SearchBarText.length !== 42) return;
+    if (!SearchBarText || !SearchBarText.startsWith("0x") || SearchBarText.length !== 42) {
+      onResults([]);
+      return;
+    }
     setIsLogoVisible(false);
     onLoading(true);
     onSearchButtonClick();
     try {
-      const rawResults = await scanAddress(SearchBarText);
-      const transformedPromises = rawResults.map(transformDataForCard);
+      const rawResults = await scanAddress(SearchBarText, selectedChainId);
+      const transformedPromises = rawResults.map(txData => transformDataForCard(txData, selectedChainId));
       const transformedResults = await Promise.all(transformedPromises);
       onResults(transformedResults);
     } catch (error) {
       console.error("Error fetching data:", error);
+      onResults([]);
     } finally {
       onLoading(false);
     }
@@ -31,13 +35,21 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
   }));
 
   useEffect(() => {
-    if (SearchBarText) {
+    if (SearchBarText && SearchBarText.startsWith("0x") && SearchBarText.length === 42) {
       handleSearch();
     }
-  }, [SearchBarText]);
+  }, [SearchBarText, selectedChainId]);
 
   const handleClearSearch = () => {
     clearAll();
+  };
+
+  const handleInputChange = (e) => {
+    setSearchBarText(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    handleSearch();
   };
 
   return (
@@ -79,9 +91,9 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
             <SearchIcon color="customGray.600" />
           </InputLeftElement>
           <Input
-            placeholder="Enter a BNBChain Wallet Address or Click Connect"
+            placeholder="Enter a Wallet Address or Click Connect"
             value={SearchBarText || ''}
-            onChange={(e) => setSearchBarText(e.target.value)}
+            onChange={handleInputChange}
             flex="1"
             marginRight="2"
             fontSize="clamp(6px, 2vw, 15px)"
@@ -100,7 +112,7 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
             </InputRightElement>
           )}
         </InputGroup>
-        <Button flexShrink="0" onClick={handleSearch} variant="simple">
+        <Button flexShrink="0" onClick={handleSearchClick} variant="simple">
           Search
         </Button>
       </Flex>

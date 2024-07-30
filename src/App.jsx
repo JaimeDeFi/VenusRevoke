@@ -1,13 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useColorModeValue, Box } from '@chakra-ui/react';
 import Header from './components/Header.jsx';
 import Search from './components/Search.jsx';
 import CardList from './components/CardList.jsx';
 import Footer from './components/Footer.jsx';
-import { useConnect, useAccount } from "wagmi";
-import { InjectedConnector } from 'wagmi/connectors/injected';
 
-function App({ chainId }) {
+function App() {
   const Bodybg = useColorModeValue('body.light', 'body.dark');
   const textColor = useColorModeValue('text.light', 'text.dark');
   const [cardListMarginTop, setCardListMarginTop] = useState(false);
@@ -17,10 +15,7 @@ function App({ chainId }) {
   const [results, setResults] = useState([]);
   const [SearchBarText, setSearchBarText] = useState("");
   const searchRef = useRef(null);
-  const { isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const [selectedChainId, setSelectedChainId] = useState(56);
 
   const handleSearchBarPosition = () => {
     setTimeout(() => {
@@ -38,10 +33,24 @@ function App({ chainId }) {
     setIsLoading(loadingState);
   };
 
+  const handleNetworkChange = (chainId) => {
+    setSelectedChainId(chainId);
+  };
+
   const clearAll = () => {
     setResults([]);
     setSearchBarText("");
   };
+
+  useEffect(() => {
+    setSearchBarText("");
+  }, []);
+
+  useEffect(() => {
+    if (SearchBarText && searchRef.current) {
+      searchRef.current.handleSearch();
+    }
+  }, [selectedChainId]);
 
   return (
     <>
@@ -54,10 +63,9 @@ function App({ chainId }) {
       >
         <Header
           showLogo={!searchBarInitPosition}
-          connect={connect}
-          isConnected={isConnected}
           setSearchBarText={setSearchBarText}
           clearAll={clearAll}
+          onNetworkChange={handleNetworkChange}
         />
         <Search
           onSearchButtonClick={handleSearchBarPosition}
@@ -68,8 +76,16 @@ function App({ chainId }) {
           setSearchBarText={setSearchBarText}
           SearchBarText={SearchBarText}
           ref={searchRef}
+          selectedChainId={selectedChainId}
         />
-        {showCardList && <CardList data={results} isLoading={isLoading} marginTop={cardListMarginTop} searchedAddress={SearchBarText} chainId={chainId} />}
+        {showCardList && 
+        <CardList
+          data={results}
+          isLoading={isLoading}
+          marginTop={cardListMarginTop}
+          searchedAddress={SearchBarText}
+          chainId={selectedChainId}
+        />}
       </Box>
       <Footer />
     </>

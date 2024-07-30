@@ -87,7 +87,7 @@ const theme = extendTheme({
           borderRadius: "8px",
           fontWeight: "bold",
           transition: "0.3s",
-          size:"xs",
+          size: "xs",
         },
         icon: {
           alignItems: "center",
@@ -142,6 +142,32 @@ const theme = extendTheme({
               cursor: "pointer",
             },
           }
+        },
+        networkSelector: {
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "8px",
+          borderWidth: "1px",
+          transition: "0.3s",
+          _dark: {
+            backgroundColor: colors.customGray[500],
+            borderColor: "gray.600",
+            _hover: {
+              backgroundColor: colors.customGray[400],
+              borderColor: colors.customGray[400],
+              color: "white",
+              cursor: "pointer",
+            },
+          },
+          _light: {
+            backgroundColor: "gray.100",
+            borderColor: "gray.200",
+            _hover: {
+              backgroundColor: "gray.300",
+              borderColor: "gray.300",
+              cursor: "pointer",
+            },
+          },
         }
       }
     },
@@ -188,9 +214,18 @@ const theme = extendTheme({
         fontSize: "sm",
         color: "gray.500",
       },
+      variants: {
+        networkSelector: {
+          _dark: {
+            color: "white",
+          },
+          _light: {
+            color: "gray.600",
+          },
+        },
+      },
     },
-  },
+  }
 });
 
 export default theme;
-

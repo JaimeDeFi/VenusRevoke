@@ -18,17 +18,17 @@ function Footer() {
       left="0"
     >
       <HStack spacing="12px" justify="center">
-        <Button as="a" href="https://github.com/J1Mtonic/VenusRevoke" target="_blank" variant="icon">
+        <Button as="a" href="https://github.com/JaimeDeFi/VenusRevoke" target="_blank" variant="icon">
           <Icon as={FaGithub} className="white" />
         </Button>
-        <Button as="a" href="https://twitter.com/Venus_Community" target="_blank" variant="icon">
+        <Button as="a" href="https://twitter.com/VanguardVantage" target="_blank" variant="icon">
           <Icon as={FaTwitter} className="twitter" />
         </Button>
       </HStack>
       <Flex justifyContent="center" mt={4}>
         <Text fontSize="sm">
           Made with <Text as="span" color="red.500">❤️</Text> by
-          <Link href="https://venusstars.io" target="_blank" variant="gradientText"> VenusStars</Link>
+          <Link href="https://vanguardvantage.io" target="_blank" variant="gradientText"> VanguardVantage</Link>
         </Text>
       </Flex>
     </Box>
