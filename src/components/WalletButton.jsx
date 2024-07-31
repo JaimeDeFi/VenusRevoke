@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/react';
 import { useAccount, useDisconnect, useConnect } from 'wagmi'
 import { injected } from '@wagmi/connectors'
 
-function WalletButton({ setSearchBarText, clearAll }) {
+function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
   const { isConnected, address } = useAccount();
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
@@ -12,16 +12,28 @@ function WalletButton({ setSearchBarText, clearAll }) {
     if (address) {
       setSearchBarText(address);
     }
-  }, [address]);
+  }, [address, setSearchBarText]);
 
   const handleWalletButtonClick = async () => {
     if (isConnected) {
       await disconnect();
       clearAll();
+      localStorage.removeItem('walletConnected');
     } else {
-      await connect({ connector: injected() })
+      await connect({ connector: injected() });
+      localStorage.setItem('walletConnected', 'true');
+      if (selectedChainId) {
+        localStorage.setItem('lastConnectedChainId', selectedChainId);
+      }
     }
   }
+
+  useEffect(() => {
+    const wasConnected = localStorage.getItem('walletConnected');
+    if (wasConnected === 'true' && !isConnected) {
+      connect({ connector: injected() });
+    }
+  }, [connect, isConnected]);
 
   return (
     <Button variant="simple" onClick={handleWalletButtonClick}>

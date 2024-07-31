@@ -1,17 +1,24 @@
-import React, { useState, useImperativeHandle, useEffect } from 'react';
-import { Input, Button, Icon, Text, Flex, InputGroup, InputLeftElement, InputRightElement, useColorModeValue, useTheme } from '@chakra-ui/react';
+import React, { useState, useImperativeHandle } from 'react';
+import { Input, Button, Icon, Text, Flex, InputGroup, InputLeftElement, InputRightElement, useColorModeValue, useTheme, useToast } from '@chakra-ui/react';
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons';
+import { useChainId } from 'wagmi';
 import { scanAddress, transformDataForCard } from './searchHelpers';
 import LogoVenus from './LogoVenus.jsx';
 
 const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition, onResults, onLoading, clearAll, setSearchBarText, SearchBarText, selectedChainId }, ref) => {
+  const chainId = useChainId();
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const theme = useTheme();
   const textColor = useColorModeValue(theme.colors.customGray[400], 'white');
+  const toast = useToast();
 
   const handleSearch = async () => {
     if (!SearchBarText || !SearchBarText.startsWith("0x") || SearchBarText.length !== 42) {
       onResults([]);
+      return;
+    }
+    if (chainId !== selectedChainId) {
+      console.warn("Chain mismatch, not performing search");
       return;
     }
     setIsLogoVisible(false);
@@ -25,6 +32,13 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
     } catch (error) {
       console.error("Error fetching data:", error);
       onResults([]);
+      toast({
+        title: "Error",
+        description: "Failed to fetch data. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     } finally {
       onLoading(false);
     }
@@ -33,12 +47,6 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
   useImperativeHandle(ref, () => ({
     handleSearch,
   }));
-
-  useEffect(() => {
-    if (SearchBarText && SearchBarText.startsWith("0x") && SearchBarText.length === 42) {
-      handleSearch();
-    }
-  }, [SearchBarText, selectedChainId]);
 
   const handleClearSearch = () => {
     clearAll();

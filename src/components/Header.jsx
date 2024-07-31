@@ -4,7 +4,7 @@ import WalletButton from './WalletButton.jsx';
 import NetworkChanger from './NetworkChanger.jsx';
 import LogoVenus from './LogoVenus.jsx';
 
-function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange }) {
+function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selectedChainId, isConnected, chainId }) {
   const { toggleColorMode } = useColorMode();
   const theme = useTheme();
   const textColor = useColorModeValue(theme.colors.customGray[400], 'white');
@@ -44,6 +44,9 @@ function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange }) {
         <NetworkChanger
           mr="12"
           onNetworkChange={onNetworkChange}
+          selectedChainId={selectedChainId}
+          isConnected={isConnected}
+          chainId={chainId}
         />
         <WalletButton
           setSearchBarText={setSearchBarText}

@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useColorModeValue, Box } from '@chakra-ui/react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useColorModeValue, Box, useToast } from '@chakra-ui/react';
+import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 import Header from './components/Header.jsx';
 import Search from './components/Search.jsx';
 import CardList from './components/CardList.jsx';
@@ -15,7 +16,11 @@ function App() {
   const [results, setResults] = useState([]);
   const [SearchBarText, setSearchBarText] = useState("");
   const searchRef = useRef(null);
-  const [selectedChainId, setSelectedChainId] = useState(56);
+  const [selectedChainId, setSelectedChainId] = useState(null);
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
+  const { isConnected } = useAccount();
+  const toast = useToast();
 
   const handleSearchBarPosition = () => {
     setTimeout(() => {
@@ -33,9 +38,30 @@ function App() {
     setIsLoading(loadingState);
   };
 
-  const handleNetworkChange = (chainId) => {
-    setSelectedChainId(chainId);
-  };
+  const handleNetworkChange = useCallback(async (newChainId) => {
+    if (newChainId === selectedChainId) return;
+
+    try {
+      await switchChain({ chainId: newChainId });
+      setSelectedChainId(newChainId);
+      toast({
+        title: "Network Changed",
+        description: `Switched to chain ID: ${newChainId}`,
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Error switching chains:', error);
+      toast({
+        title: "Network switch failed",
+        description: "Please try again or switch manually in your wallet.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [selectedChainId, switchChain, toast]);
 
   const clearAll = () => {
     setResults([]);
@@ -47,10 +73,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (SearchBarText && searchRef.current) {
+    if (chainId) {
+      setSelectedChainId(chainId);
+    }
+  }, [chainId]);
+
+  useEffect(() => {
+    if (SearchBarText && searchRef.current && isConnected && chainId === selectedChainId) {
       searchRef.current.handleSearch();
     }
-  }, [selectedChainId]);
+  }, [selectedChainId, SearchBarText, chainId, isConnected]);
 
   return (
     <>
@@ -66,6 +98,9 @@ function App() {
           setSearchBarText={setSearchBarText}
           clearAll={clearAll}
           onNetworkChange={handleNetworkChange}
+          selectedChainId={selectedChainId}
+          isConnected={isConnected}
+          chainId={chainId}
         />
         <Search
           onSearchButtonClick={handleSearchBarPosition}
