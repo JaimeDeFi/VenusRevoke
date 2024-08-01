@@ -9,10 +9,10 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
   const { disconnect } = useDisconnect();
   const toast = useToast();
 
-  const showConnectionError = useCallback(() => {
+  const showConnectionError = useCallback((message = "Unable to connect. Make sure you have a wallet app installed in your browser.") => {
     toast({
       title: "Connection Error",
-      description: "Unable to connect. Make sure you have a wallet app installed in your browser.",
+      description: message,
       status: "error",
       duration: 5000,
       isClosable: true,
@@ -42,9 +42,9 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
       try {
         await connect({ connector: injected(), chainId: selectedChainId });
         localStorage.setItem('walletConnected', 'true');
-        localStorage.setItem('lastConnectedChainId', selectedChainId);
+        localStorage.setItem('lastConnectedChainId', selectedChainId.toString());
       } catch (error) {
-        showConnectionError();
+        showConnectionError(error.message || "Failed to connect wallet.");
       }
     }
   }
@@ -52,9 +52,16 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
   useEffect(() => {
     const wasConnected = localStorage.getItem('walletConnected');
     if (wasConnected === 'true' && !isConnected) {
-      connect({ connector: injected() });
+      const attemptReconnect = async () => {
+        try {
+          await connect({ connector: injected() });
+        } catch (error) {
+          showConnectionError("Failed to automatically reconnect wallet.");
+        }
+      };
+      attemptReconnect();
     }
-  }, [connect, isConnected]);
+  }, [connect, isConnected, showConnectionError]);
 
   return (
     <Button variant="simple" flexShrink="0" onClick={handleWalletButtonClick}>
