@@ -36,7 +36,7 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
   }, [connect, isConnected]);
 
   return (
-    <Button variant="simple" onClick={handleWalletButtonClick}>
+    <Button variant="simple" flexShrink="0" onClick={handleWalletButtonClick}>
       {isConnected ? (address.slice(0, 4) + "..." + address.slice(-4)) : "Connect"}
     </Button>
   );

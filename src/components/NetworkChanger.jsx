@@ -21,7 +21,7 @@ function NetworkChanger({ onNetworkChange, selectedChainId, isConnected, chainId
     } else if (storedChainId && chains.some(chain => chain.id === Number(storedChainId))) {
       setDisplayChainId(Number(storedChainId));
     } else {
-      setDisplayChainId(chains[0].id); // Default to the first chain in the list
+      setDisplayChainId(chains[0].id);
     }
   }, [wagmiIsConnected, chainId, chains]);
 
@@ -50,10 +50,9 @@ function NetworkChanger({ onNetworkChange, selectedChainId, isConnected, chainId
 
   return (
     <Menu>
-      <MenuButton as={Button} variant="networkSelector" rightIcon={<ChevronDownIcon />} minWidth="150px" height="40px" mr={2}>
+      <MenuButton as={Button} variant="networkSelector" rightIcon={<ChevronDownIcon />} minWidth="80px" height="40px" mr={2}>
         <Flex align="center" width="full">
-          <Image src={networkIcon(currentChain.name)} boxSize="20px" />
-          <Text variant="networkSelector" ml="2" mr="auto" isTruncated>{getDisplayName(currentChain.name)}</Text>
+          <Image src={networkIcon(currentChain.name)} boxSize="20px" />          
         </Flex>
       </MenuButton>
       <MenuList zIndex={2}>
