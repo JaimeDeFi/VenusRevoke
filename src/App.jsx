@@ -44,13 +44,6 @@ function App() {
     try {
       await switchChain({ chainId: newChainId });
       setSelectedChainId(newChainId);
-      toast({
-        title: "Network Changed",
-        description: `Switched to chain ID: ${newChainId}`,
-        status: "info",
-        duration: 3000,
-        isClosable: true,
-      });
     } catch (error) {
       console.error('Error switching chains:', error);
       toast({
@@ -109,9 +102,9 @@ function App() {
           onLoading={handleLoadingState}
           clearAll={clearAll}
           setSearchBarText={setSearchBarText}
-          SearchBarText={SearchBarText}
-          ref={searchRef}
+          SearchBarText={SearchBarText}          
           selectedChainId={selectedChainId}
+          ref={searchRef}
         />
         {showCardList && 
         <CardList

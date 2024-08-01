@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useConfig, useChainId, useAccount } from 'wagmi';
-import { Menu, MenuButton, MenuList, MenuItem, Button, Image, Flex, Text } from '@chakra-ui/react';
+import { useConfig, useAccount } from 'wagmi';
+import { Menu, MenuButton, MenuList, MenuItem, Button, Image, Flex } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
 import EthereumIconPath from '../assets/eth.svg';
@@ -8,7 +8,7 @@ import BNBIconPath from '../assets/bnb.svg';
 import ArbitrumIconPath from '../assets/arbitrum.svg';
 import OpBNBIconPath from '../assets/opbnb.svg';
 
-function NetworkChanger({ onNetworkChange, selectedChainId, isConnected, chainId }) {
+function NetworkChanger({ onNetworkChange, chainId }) {
   const { chains } = useConfig();
   const { isConnected: wagmiIsConnected } = useAccount();
   const [displayChainId, setDisplayChainId] = useState(null);

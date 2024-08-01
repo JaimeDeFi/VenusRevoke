@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { useAccount, useDisconnect, useConnect } from 'wagmi'
 import { injected } from '@wagmi/connectors'
 
@@ -7,6 +7,7 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
   const { isConnected, address } = useAccount();
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
+  const toast = useToast();
 
   useEffect(() => {
     if (address) {
@@ -20,10 +21,19 @@ function WalletButton({ setSearchBarText, clearAll, selectedChainId }) {
       clearAll();
       localStorage.removeItem('walletConnected');
     } else {
-      await connect({ connector: injected() });
-      localStorage.setItem('walletConnected', 'true');
-      if (selectedChainId) {
+      try {
+        await connect({ connector: injected(), chainId: selectedChainId });
+        localStorage.setItem('walletConnected', 'true');
         localStorage.setItem('lastConnectedChainId', selectedChainId);
+      } catch (error) {
+        console.error('Connection error:', error);
+        toast({
+          title: "Connection Error",
+          description: "Unable to connect. Make sure the wallet you selected is installed in your browser.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     }
   }

@@ -1,5 +1,5 @@
 import { Box, Button, Link, HStack, Icon, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import { FaTwitter, FaGithub, FaInfoCircle } from 'react-icons/fa';
+import { FaTwitter, FaGithub } from 'react-icons/fa';
 
 function Footer() {
   const footerBg = useColorModeValue('footer.light', 'footer.dark');

@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer, Button, Icon, useColorMode, useColorModeValue, useTheme, Text } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Button, Icon, useColorMode, useColorModeValue, useTheme, Text, Hide } from '@chakra-ui/react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import WalletButton from './WalletButton.jsx';
 import NetworkChanger from './NetworkChanger.jsx';
@@ -21,15 +21,17 @@ function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selecte
         >
           {showLogo && (
             <>
-              <LogoVenus size="clamp(30px, 1vw, 1px)" />
-              <Text
-                fontSize={`clamp(24px, 3vw, 32px)`}
-                fontWeight="bold"
-                color={textColor}
-                ml="clamp(5px, 1vw, 10px)"
-              >
-                REVOKE!
-              </Text>
+              <LogoVenus size="clamp(24px, 4vw, 30px)" />
+              <Hide breakpoint='(max-width: 400px)'>
+                <Text
+                  fontSize={`clamp(22px, 4vw, 24px)`}
+                  fontWeight="bold"
+                  color={textColor}
+                  ml="clamp(5px, 1vw, 10px)"
+                >
+                  REVOKE!
+                </Text>
+              </Hide>
             </>
           )}
         </Flex>
@@ -51,6 +53,7 @@ function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selecte
         <WalletButton
           setSearchBarText={setSearchBarText}
           clearAll={clearAll}
+          selectedChainId={selectedChainId}
         />
       </Flex>
     </Box>
