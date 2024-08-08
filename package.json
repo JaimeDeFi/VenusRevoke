@@ -15,16 +15,16 @@
     "@chakra-ui/system": "^2.6.2",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@tanstack/react-query": "^5.51.15",
-    "framer-motion": "^11.3.19",
+    "@tanstack/react-query": "^5.51.23",
+    "framer-motion": "^11.3.24",
     "js-sha3": "^0.9.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-icons": "^5.2.1",
-    "react-native": "^0.74.4",
+    "react-native": "^0.74.5",
     "typescript": "^5.5.4",
-    "viem": "^2.18.5",
-    "wagmi": "^2.12.1",
+    "viem": "^2.19.2",
+    "wagmi": "^2.12.4",
     "web3": "^4.11.1"
   },
   "devDependencies": {
@@ -34,6 +34,6 @@
     "eslint": "^9.8.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-refresh": "^0.4.9",
-    "vite": "^5.3.5"
+    "vite": "^5.4.0"
   }
 }
