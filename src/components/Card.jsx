@@ -4,8 +4,6 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { useAccount, useChainId, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 import { erc20Abi } from 'viem'
 
-//v0
-
 const getExplorerUrl = (chainId) => {
   switch (Number(chainId)) {
     case 1: return 'https://etherscan.io';
@@ -22,9 +20,9 @@ function Card({ token, spender, date, txid, allowance, chainId, onRevokeSuccess,
   const { writeContract, isLoading: isWritePending, data: writeData } = useWriteContract();
   const [isRevoking, setIsRevoking] = useState(false);
   const [transactionHash, setTransactionHash] = useState(null);
-  const { isSuccess, isError } = useWaitForTransactionReceipt({
+  const { data: transactionReceipt, isLoading: isWaiting } = useWaitForTransactionReceipt({
     hash: transactionHash,
-  });
+  })
   const [error, setError] = useState(null);
 
   const shortenAddress = (address) => `${address.substring(0, 5)}...${address.substring(address.length - 3)}`;
@@ -42,15 +40,11 @@ function Card({ token, spender, date, txid, allowance, chainId, onRevokeSuccess,
   }, [writeData]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (transactionReceipt && !isWaiting) {
       onRevokeSuccess(token.address, spender);
       resetRevokingState();
     }
-    if (isError) {
-      setError("Transaction failed. Please try again.");
-      resetRevokingState();
-    }
-  }, [isSuccess, isError, token.address, spender, onRevokeSuccess, resetRevokingState]);
+  }, [transactionReceipt, isWaiting, token.address, spender, onRevokeSuccess, resetRevokingState]);
 
   const handleRevoke = async (tokenAddress, spender) => {
     setError(null);

@@ -19,7 +19,7 @@ function App() {
   const [selectedChainId, setSelectedChainId] = useState(null);
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const toast = useToast();
 
   const handleSearchBarPosition = () => {
@@ -56,14 +56,31 @@ function App() {
     }
   }, [selectedChainId, switchChain, toast]);
 
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     setResults([]);
     setSearchBarText("");
-  };
+    setSearchBarInitPosition(true);
+    setShowCardList(false);
+    setCardListMarginTop(false);
+  }, []);
 
   useEffect(() => {
-    setSearchBarText("");
-  }, []);
+    if (isConnected && address) {
+      setSearchBarText(address);
+      setSearchBarInitPosition(false);
+      setShowCardList(true);
+      setCardListMarginTop("100px");
+      if (searchRef.current) {
+        searchRef.current.handleSearch();
+        searchRef.current.setIsLogoVisible(false);
+      }
+    } else {
+      clearAll();
+      if (searchRef.current) {
+        searchRef.current.setIsLogoVisible(true);
+      }
+    }
+  }, [isConnected, address, clearAll]);
 
   useEffect(() => {
     if (chainId) {
@@ -92,8 +109,6 @@ function App() {
           clearAll={clearAll}
           onNetworkChange={handleNetworkChange}
           selectedChainId={selectedChainId}
-          isConnected={isConnected}
-          chainId={chainId}
         />
         <Search
           onSearchButtonClick={handleSearchBarPosition}
@@ -102,18 +117,18 @@ function App() {
           onLoading={handleLoadingState}
           clearAll={clearAll}
           setSearchBarText={setSearchBarText}
-          SearchBarText={SearchBarText}          
+          SearchBarText={SearchBarText}
           selectedChainId={selectedChainId}
           ref={searchRef}
         />
-        {showCardList && 
-        <CardList
-          data={results}
-          isLoading={isLoading}
-          marginTop={cardListMarginTop}
-          searchedAddress={SearchBarText}
-          chainId={selectedChainId}
-        />}
+        {showCardList &&
+          <CardList
+            data={results}
+            isLoading={isLoading}
+            marginTop={cardListMarginTop}
+            searchedAddress={SearchBarText}
+            chainId={selectedChainId}
+          />}
       </Box>
       <Footer />
     </>

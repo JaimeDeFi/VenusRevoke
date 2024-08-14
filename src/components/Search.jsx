@@ -56,10 +56,12 @@ const Search = React.forwardRef(({ onSearchButtonClick, isSearchBarInitPosition,
 
   useImperativeHandle(ref, () => ({
     handleSearch,
+    setIsLogoVisible: (visible) => setIsLogoVisible(visible),
   }));
 
   const handleClearSearch = () => {
     clearAll();
+    setIsLogoVisible(true);
   };
 
   const handleInputChange = (e) => {

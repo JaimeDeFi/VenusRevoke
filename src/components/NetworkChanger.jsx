@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useConfig, useAccount } from 'wagmi';
+import { useConfig, useAccount, useChainId, useSwitchChain } from 'wagmi';
 import { Menu, MenuButton, MenuList, MenuItem, Button, Image, Flex } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
@@ -8,14 +8,16 @@ import BNBIconPath from '../assets/bnb.svg';
 import ArbitrumIconPath from '../assets/arbitrum.svg';
 import OpBNBIconPath from '../assets/opbnb.svg';
 
-function NetworkChanger({ onNetworkChange, chainId }) {
+function NetworkChanger({ onNetworkChange }) {
   const { chains } = useConfig();
-  const { isConnected: wagmiIsConnected } = useAccount();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
+  const { isConnected } = useAccount();
   const [displayChainId, setDisplayChainId] = useState(null);
 
   useEffect(() => {
     const storedChainId = localStorage.getItem('lastSelectedChainId');
-    if (wagmiIsConnected && chainId) {
+    if (isConnected && chainId) {
       setDisplayChainId(chainId);
       localStorage.setItem('lastSelectedChainId', chainId);
     } else if (storedChainId && chains.some(chain => chain.id === Number(storedChainId))) {
@@ -23,14 +25,21 @@ function NetworkChanger({ onNetworkChange, chainId }) {
     } else {
       setDisplayChainId(chains[0].id);
     }
-  }, [wagmiIsConnected, chainId, chains]);
+  }, [isConnected, chainId, chains]);
 
   const chainNameDisplayMap = { 'BNB Smart Chain': 'BNB', 'Arbitrum One': 'Arbitrum' };
   const getDisplayName = (chainName) => chainNameDisplayMap[chainName] || chainName;
 
-  const handleNetworkChange = (network) => {
+  const handleNetworkChange = async (network) => {
     setDisplayChainId(network.id);
     localStorage.setItem('lastSelectedChainId', network.id);
+    if (switchChain) {
+      try {
+        await switchChain({ chainId: network.id });
+      } catch (error) {
+        console.error('Failed to switch chain:', error);
+      }
+    }
     onNetworkChange(network.id);
   };
 

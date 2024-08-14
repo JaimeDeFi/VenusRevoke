@@ -6,22 +6,22 @@ const symbolABI = [{ constant: true, inputs: [], name: "symbol", outputs: [{ nam
 
 const networkConfigs = {
   1: {  // Ethereum
-    apiUrl: (address) => `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=I11NTC7UVEDFBMKP97R56UUB1AUC2PQSHP`,
+    apiUrl: (address) => `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_ETHERSCAN_API_KEY}`,
     rpcUrl: 'https://eth.meowrpc.com',
     blockchainName: 'ethereum'
   },
   56: {  // BNB Chain
-    apiUrl: (address) => `https://api.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=J5HERDUSE8HWU7HISSURZY1349VBWHX31F`,
+    apiUrl: (address) => `https://api.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_BSCSCAN_API_KEY}`,
     rpcUrl: 'https://bsc.meowrpc.com',
     blockchainName: 'smartchain'
   },
   42161: {  // Arbitrum One
-    apiUrl: (address) => `https://api.arbiscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=GEES8H1WGQPRG9WNGAYEVRCK7FJ6Z7CPQN`,
+    apiUrl: (address) => `https://api.arbiscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_ARBISCAN_API_KEY}`,
     rpcUrl: 'https://arbitrum.meowrpc.com',
     blockchainName: 'arbitrum'
   },
   204: {  // opBNB
-    apiUrl: (address) => `https://api-opbnb.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=11SQ31PRDHUF2TZZCW4AUZ6EUMUVFKZD6R`,
+    apiUrl: (address) => `https://api-opbnb.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_OPBNBSCAN_API_KEY}`,
     rpcUrl: 'https://opbnb-mainnet-rpc.bnbchain.org',
     blockchainName: 'opbnb'
   }

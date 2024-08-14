@@ -1,13 +1,16 @@
 import { Box, Flex, Spacer, Button, Icon, useColorMode, useColorModeValue, useTheme, Text, Hide } from '@chakra-ui/react';
 import { FaSun, FaMoon } from 'react-icons/fa';
+import { useAccount, useChainId } from 'wagmi';
 import WalletButton from './WalletButton.jsx';
 import NetworkChanger from './NetworkChanger.jsx';
 import LogoVenus from './LogoVenus.jsx';
 
-function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selectedChainId, isConnected, chainId }) {
+function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selectedChainId }) {
   const { toggleColorMode } = useColorMode();
   const theme = useTheme();
   const textColor = useColorModeValue(theme.colors.customGray[400], 'white');
+  const { isConnected } = useAccount();
+  const chainId = useChainId();
 
   return (
     <Box p="4">
@@ -53,7 +56,6 @@ function Header({ showLogo, setSearchBarText, clearAll, onNetworkChange, selecte
         <WalletButton
           setSearchBarText={setSearchBarText}
           clearAll={clearAll}
-          selectedChainId={selectedChainId}
         />
       </Flex>
     </Box>
