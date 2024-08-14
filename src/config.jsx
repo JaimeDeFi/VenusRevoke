@@ -15,5 +15,8 @@ export const config = createConfig(
       [opBNB.id]: http(),
     },
     walletConnectProjectId,
+    appDescription: "Revoke token approvals easily",
+    appUrl: "https://revoke.venuscommunity.io",
+    appIcon: "https://revoke.venuscommunity.io/icon.png",
   })
 );

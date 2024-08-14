@@ -7,10 +7,12 @@ function WalletButton({ setSearchBarText, clearAll }) {
   const { address, isConnected } = useAccount();
 
   useEffect(() => {
-    if (address) {
+    if (isConnected && address) {
       setSearchBarText(address);
+    } else {
+      clearAll();
     }
-  }, [address, setSearchBarText]);
+  }, [address, isConnected, setSearchBarText, clearAll]);
 
   return (
     <ConnectKitButton.Custom>
