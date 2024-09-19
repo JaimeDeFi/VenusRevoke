@@ -9,6 +9,7 @@ const getExplorerUrl = (chainId) => {
     case 1: return 'https://etherscan.io';
     case 56: return 'https://bscscan.com';
     case 42161: return 'https://arbiscan.io';
+    case 324: return 'https://explorer.zksync.io';
     case 204: return 'https://opbnb.bscscan.com';
     default: return 'https://bscscan.com';
   }

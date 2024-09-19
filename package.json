@@ -13,28 +13,28 @@
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@chakra-ui/system": "^2.6.2",
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query": "^5.56.2",
     "connectkit": "^1.8.2",
-    "framer-motion": "^11.3.27",
+    "framer-motion": "^11.5.5",
     "js-sha3": "^0.9.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-icons": "^5.3.0",
-    "react-native": "^0.74.5",
-    "typescript": "^5.5.4",
-    "viem": "^2.19.4",
-    "wagmi": "^2.12.5",
-    "web3": "^4.11.1"
+    "react-native": "^0.75.3",
+    "typescript": "^5.6.2",
+    "viem": "^2.21.9",
+    "wagmi": "^2.12.12",
+    "web3": "^4.13.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "vite": "^5.4.0"
+    "eslint": "^9.10.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "vite": "^5.4.6"
   }
 }

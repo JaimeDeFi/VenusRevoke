@@ -7,18 +7,23 @@ const symbolABI = [{ constant: true, inputs: [], name: "symbol", outputs: [{ nam
 const networkConfigs = {
   1: {  // Ethereum
     apiUrl: (address) => `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_ETHERSCAN_API_KEY}`,
-    rpcUrl: 'https://eth.meowrpc.com',
+    rpcUrl: 'https://rpc.ankr.com/eth',
     blockchainName: 'ethereum'
   },
   56: {  // BNB Chain
     apiUrl: (address) => `https://api.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_BSCSCAN_API_KEY}`,
-    rpcUrl: 'https://bsc.meowrpc.com',
+    rpcUrl: 'https://rpc.ankr.com/bsc',
     blockchainName: 'smartchain'
   },
   42161: {  // Arbitrum One
     apiUrl: (address) => `https://api.arbiscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_ARBISCAN_API_KEY}`,
-    rpcUrl: 'https://arbitrum.meowrpc.com',
+    rpcUrl: 'https://rpc.ankr.com/arbitrum',
     blockchainName: 'arbitrum'
+  },
+  324: {  // ZKsync Era
+    apiUrl: (address) => `https://block-explorer-api.mainnet.zksync.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`,
+    rpcUrl: 'https://rpc.ankr.com/zksync_era',
+    blockchainName: 'zksync'
   },
   204: {  // opBNB
     apiUrl: (address) => `https://api-opbnb.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_OPBNBSCAN_API_KEY}`,

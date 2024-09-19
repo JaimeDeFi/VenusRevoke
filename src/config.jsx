@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi'
-import { mainnet, bsc, opBNB, arbitrum } from 'wagmi/chains'
+import { mainnet, bsc, opBNB, arbitrum, zksync } from 'wagmi/chains'
 import { getDefaultConfig } from "connectkit";
 
 const walletConnectProjectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID;
@@ -7,11 +7,12 @@ const walletConnectProjectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID;
 export const config = createConfig(
   getDefaultConfig({
     appName: "Venus Revoke",
-    chains: [mainnet, bsc, arbitrum, opBNB],
+    chains: [mainnet, bsc, arbitrum, zksync, opBNB],
     transports: {
       [mainnet.id]: http(),
       [bsc.id]: http(),
       [arbitrum.id]: http(),
+      [zksync.id]: http(),
       [opBNB.id]: http(),
     },
     walletConnectProjectId,

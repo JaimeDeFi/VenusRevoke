@@ -6,6 +6,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import EthereumIconPath from '../assets/eth.svg';
 import BNBIconPath from '../assets/bnb.svg';
 import ArbitrumIconPath from '../assets/arbitrum.svg';
+import zkSyncIconPath from '../assets/zksync.svg';
 import OpBNBIconPath from '../assets/opbnb.svg';
 
 function NetworkChanger({ onNetworkChange }) {
@@ -27,7 +28,7 @@ function NetworkChanger({ onNetworkChange }) {
     }
   }, [isConnected, chainId, chains]);
 
-  const chainNameDisplayMap = { 'BNB Smart Chain': 'BNB', 'Arbitrum One': 'Arbitrum' };
+  const chainNameDisplayMap = { 'BNB Smart Chain': 'BNB', 'Arbitrum One': 'Arbitrum', 'ZKsync Era': 'zkSync' };
   const getDisplayName = (chainName) => chainNameDisplayMap[chainName] || chainName;
 
   const handleNetworkChange = async (network) => {
@@ -48,6 +49,7 @@ function NetworkChanger({ onNetworkChange }) {
       'Ethereum': EthereumIconPath,
       'BNB Smart Chain': BNBIconPath,
       'Arbitrum One': ArbitrumIconPath,
+      'ZKsync Era': zkSyncIconPath,
       'opBNB': OpBNBIconPath
     };
     return icons[networkName] || null;
