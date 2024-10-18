@@ -10,31 +10,31 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.1.1",
-    "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.10.3",
     "@chakra-ui/system": "^2.6.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query": "^5.59.15",
     "connectkit": "^1.8.2",
-    "framer-motion": "^11.5.5",
+    "framer-motion": "^11.11.9",
     "js-sha3": "^0.9.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-icons": "^5.3.0",
-    "react-native": "^0.75.3",
-    "typescript": "^5.6.2",
-    "viem": "^2.21.9",
-    "wagmi": "^2.12.12",
+    "react-native": "^0.75.4",
+    "typescript": "^5.6.3",
+    "viem": "^2.21.29",
+    "wagmi": "^2.12.19",
     "web3": "^4.13.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.7",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.10.0",
-    "eslint-plugin-react": "^7.36.1",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-refresh": "^0.4.12",
-    "vite": "^5.4.6"
+    "vite": "^5.4.9"
   }
 }

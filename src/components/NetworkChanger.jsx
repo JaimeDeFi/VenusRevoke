@@ -8,6 +8,7 @@ import BNBIconPath from '../assets/bnb.svg';
 import ArbitrumIconPath from '../assets/arbitrum.svg';
 import zkSyncIconPath from '../assets/zksync.svg';
 import OpBNBIconPath from '../assets/opbnb.svg';
+import OptimismIconPath from '../assets/optimism.svg';
 
 function NetworkChanger({ onNetworkChange }) {
   const { chains } = useConfig();
@@ -28,7 +29,7 @@ function NetworkChanger({ onNetworkChange }) {
     }
   }, [isConnected, chainId, chains]);
 
-  const chainNameDisplayMap = { 'BNB Smart Chain': 'BNB', 'Arbitrum One': 'Arbitrum', 'ZKsync Era': 'zkSync' };
+  const chainNameDisplayMap = { 'BNB Smart Chain': 'BNB Chain', 'Arbitrum One': 'Arbitrum', 'ZKsync Era': 'zkSync', 'OP Mainnet': 'Optimism' };
   const getDisplayName = (chainName) => chainNameDisplayMap[chainName] || chainName;
 
   const handleNetworkChange = async (network) => {
@@ -50,6 +51,7 @@ function NetworkChanger({ onNetworkChange }) {
       'BNB Smart Chain': BNBIconPath,
       'Arbitrum One': ArbitrumIconPath,
       'ZKsync Era': zkSyncIconPath,
+      'OP Mainnet': OptimismIconPath,
       'opBNB': OpBNBIconPath
     };
     return icons[networkName] || null;

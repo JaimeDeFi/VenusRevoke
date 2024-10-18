@@ -25,6 +25,11 @@ const networkConfigs = {
     rpcUrl: 'https://rpc.ankr.com/zksync_era',
     blockchainName: 'zksync'
   },
+  10: {  // Optimism
+    apiUrl: (address) => `https://api-optimistic.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_OPTIMISM_API_KEY}`,
+    rpcUrl: 'https://rpc.ankr.com/optimism',
+    blockchainName: 'optimism'
+  },
   204: {  // opBNB
     apiUrl: (address) => `https://api-opbnb.bscscan.com/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&apikey=${import.meta.env.VITE_OPBNBSCAN_API_KEY}`,
     rpcUrl: 'https://opbnb-mainnet-rpc.bnbchain.org',
